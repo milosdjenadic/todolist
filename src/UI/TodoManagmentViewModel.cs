@@ -62,7 +62,7 @@ internal class TodoManagmentViewModel : Screen
         await RefereshTodoLists();
 
         AddTodoListCommand = new RelayCommand(AddTodoList);
-        AddTodoItemCommand = new RelayCommand(AddTodoItem);
+        AddTodoItemCommand = new RelayCommand(AddTodoItem, p => SelectedTodoList != null);
         DoneTodoItemCommand = new RelayCommand(DoneTodoItem);
     }
 
