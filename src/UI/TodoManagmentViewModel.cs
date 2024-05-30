@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using Assignment.Application.TodoItems.Commands.DoneTodoItem;
 using Assignment.Application.TodoLists.Queries.GetTodos;
+using Assignment.UI.WindowManagement;
 using Caliburn.Micro;
 using MediatR;
 
@@ -8,8 +9,7 @@ namespace Assignment.UI;
 internal class TodoManagmentViewModel : Screen
 {
     private readonly ISender _sender;
-    private readonly IWindowManager _windowManager;
-
+    private readonly IWindowManagementService _windowManagementService;
     private IList<TodoListDto> todoLists;
     public IList<TodoListDto> TodoLists
     {
@@ -50,10 +50,10 @@ internal class TodoManagmentViewModel : Screen
     public ICommand AddTodoItemCommand { get; private set; }
     public ICommand DoneTodoItemCommand { get; private set; }
 
-    public TodoManagmentViewModel(ISender sender, IWindowManager windowManager)
+    public TodoManagmentViewModel(ISender sender, IWindowManagementService windowManagementService)
     {
         _sender = sender;
-        _windowManager = windowManager;
+        _windowManagementService = windowManagementService;
         Initialize();
     }
 
@@ -80,14 +80,12 @@ internal class TodoManagmentViewModel : Screen
 
     private async void AddTodoList(object obj)
     {
-        var todoList = new TodoListViewModel(_sender);
-        await _windowManager.ShowDialogAsync(todoList);
+        await _windowManagementService.ShowDialog<TodoListViewModel>();
     }
 
     private async void AddTodoItem(object obj)
     {
-        var todoItem = new TodoItemViewModel(_sender, SelectedTodoList.Id);
-        await _windowManager.ShowDialogAsync(todoItem);
+        await _windowManagementService.ShowDialog<TodoItemViewModel>(SelectedTodoList.Id);
     }
 
     private async void DoneTodoItem(object obj)
