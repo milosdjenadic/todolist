@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Assignment.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=local:TodoManagmentViewModel}">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -20,7 +21,7 @@
             <Button Content="Add Todo List" Command="{Binding AddTodoListCommand}" Margin="5"/>
         </StackPanel>
         <!-- Todo Items Detail Panel -->
-        <Grid Grid.Column="1" DataContext="{Binding SelectedTodoList}">
+        <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="350"/>
                 <RowDefinition Height="30"/>
@@ -30,7 +31,7 @@
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
-            <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding DataContext.SelectedItem, RelativeSource={RelativeSource AncestorType=Window}}" Grid.Row="0" Grid.ColumnSpan="3">
+            <ListView ItemsSource="{Binding SelectedTodoList.Items}" SelectedItem="{Binding SelectedItem}" Grid.Row="0" Grid.ColumnSpan="3">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" Width="300"/>
@@ -39,8 +40,8 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button Content="Add Item" Command="{Binding DataContext.AddTodoItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" Grid.Row="1" Grid.Column="1" Margin="5"/>
-            <Button Content="Done" Command="{Binding DataContext.DoneTodoItemCommand, RelativeSource={RelativeSource AncestorType=Window}}" Grid.Row="1" Grid.Column="2" Margin="5"/>
+            <Button Content="Add Item" Command="{Binding AddTodoItemCommand}" Grid.Row="1" Grid.Column="1" Margin="5"/>
+            <Button Content="Done" Command="{Binding DoneTodoItemCommand}" Grid.Row="1" Grid.Column="2" Margin="5"/>
         </Grid>
     </Grid>
 </UserControl>

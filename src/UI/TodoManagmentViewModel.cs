@@ -11,6 +11,7 @@ internal class TodoManagmentViewModel : Screen
     private readonly ISender _sender;
     private readonly IWindowManagementService _windowManagementService;
     private IList<TodoListDto> todoLists;
+
     public IList<TodoListDto> TodoLists
     {
         get
@@ -59,14 +60,14 @@ internal class TodoManagmentViewModel : Screen
 
     private async void Initialize()
     {
-        await RefereshTodoLists();
+        await RefreshTodoLists();
 
         AddTodoListCommand = new RelayCommand(AddTodoList);
         AddTodoItemCommand = new RelayCommand(AddTodoItem, p => SelectedTodoList != null);
-        DoneTodoItemCommand = new RelayCommand(DoneTodoItem);
+        DoneTodoItemCommand = new RelayCommand(DoneTodoItem, p => SelectedItem != null && !SelectedItem.Done);
     }
 
-    private async Task RefereshTodoLists()
+    private async Task RefreshTodoLists()
     {
         var selectedListId = SelectedTodoList?.Id;
 
@@ -80,16 +81,25 @@ internal class TodoManagmentViewModel : Screen
 
     private async void AddTodoList(object obj)
     {
-        await _windowManagementService.ShowDialog<TodoListViewModel>();
+        var result = await _windowManagementService.ShowDialog<TodoListViewModel>();
+        if (result ?? false)
+        {
+            await RefreshTodoLists();
+        }
     }
 
     private async void AddTodoItem(object obj)
     {
-        await _windowManagementService.ShowDialog<TodoItemViewModel>(SelectedTodoList.Id);
+        var result = await _windowManagementService.ShowDialog<TodoItemViewModel>(SelectedTodoList.Id);
+        if (result ?? false)
+        {
+            await RefreshTodoLists();
+        }
     }
 
     private async void DoneTodoItem(object obj)
     {
         await _sender.Send(new DoneTodoItemCommand(SelectedItem.Id));
+        await RefreshTodoLists();
     }
 }
