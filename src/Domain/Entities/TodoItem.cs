@@ -1,9 +1,12 @@
-﻿namespace Assignment.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Assignment.Domain.Entities;
 
 public class TodoItem : BaseAuditableEntity
 {
     public int ListId { get; set; }
 
+    [StringLength(200)]
     public string? Title { get; set; }
 
     public string? Note { get; set; }

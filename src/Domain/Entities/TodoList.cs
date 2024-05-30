@@ -1,7 +1,10 @@
-﻿namespace Assignment.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Assignment.Domain.Entities;
 
 public class TodoList : BaseAuditableEntity
 {
+    [StringLength(200)]
     public string? Title { get; set; }
 
     public Colour Colour { get; set; } = Colour.White;
