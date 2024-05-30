@@ -48,7 +48,7 @@ public static class DependencyInjection
 
         services.AddAuthorization(options =>
             options.AddPolicy(Policies.CanPurge, policy => policy.RequireRole(Roles.Administrator)));
-
+        services.AddTransient<IWeatherForecastApi, WeatherForecastApi>();
         return services;
     }
 

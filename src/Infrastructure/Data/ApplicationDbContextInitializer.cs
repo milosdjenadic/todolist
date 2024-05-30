@@ -103,5 +103,31 @@ public class ApplicationDbContextInitializer
 
             await _context.SaveChangesAsync();
         }
+
+        if (!_context.Countries.Any())
+        {
+            _context.Countries.Add(new Country
+            {
+                Name = "Zambia",
+                Cities = new List<City>
+                {
+                    new City { Name = "Lusaka" },
+                    new City { Name = "Livingstone" },
+                    new City { Name = "Ndola" },
+                }
+            });
+            _context.Countries.Add(new Country
+            {
+                Name = "São Tomé and Príncipe",
+                Cities = new List<City>
+                {
+                    new City { Name = "São Tomé" },
+                    new City { Name = "Trindade" },
+                    new City { Name = "Porto Alegre" },
+                }
+            });
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

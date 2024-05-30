@@ -14,6 +14,7 @@ public static class DependencyInjection
             .AddTransient<IWindowManager, WindowManager>()
             .AddSingleton<IWindowManagementService, WindowManagementService>()
             .AddTransient<MainViewModel>()
-            .AddTransient<TodoManagmentViewModel>();
+            .AddTransient<TodoManagmentViewModel>()
+            .AddTransient<WeatherForecastViewModel>();
     }
 }

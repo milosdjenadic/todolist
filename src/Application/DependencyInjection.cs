@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Assignment.Application;
 using Assignment.Application.Common.Behaviours;
+using Assignment.Application.Common.Interfaces;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -18,7 +19,6 @@ public static class DependencyInjection
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
         });
-
         return services;
     }
 }
