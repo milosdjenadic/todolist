@@ -1,18 +1,19 @@
 ﻿using System.Windows.Input;
+using Assignment.UI.WindowManagement;
 using Caliburn.Micro;
 
 namespace Assignment.UI
 {
     public class MainViewModel : PropertyChangedBase
     {
-        private readonly IWindowManager _windowManager;
+        private readonly IWindowManagementService _windowManagementService;
 
         public ICommand TodoListManagment { get; }
         public ICommand WeatherForecast { get; }
 
-        public MainViewModel(IWindowManager windowManager)
+        public MainViewModel(IWindowManagementService windowManagementService)
         {
-            _windowManager = windowManager;
+            _windowManagementService = windowManagementService;
             TodoListManagment = new RelayCommand(ShowTodoListManagment);
             WeatherForecast = new RelayCommand(ShowWeatherForecast);
         }
@@ -24,8 +25,7 @@ namespace Assignment.UI
 
         private async void ShowTodoListManagment(object obj)
         {
-            var todoList = IoC.Get<TodoManagmentViewModel>();
-            await _windowManager.ShowDialogAsync(todoList);
+            await _windowManagementService.ShowDialog<TodoManagmentViewModel>();
         }
     }
 }
